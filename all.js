@@ -1,3 +1,5 @@
+
+/*Declaration*/
 let data = [
     {
         "id": 0,
@@ -30,13 +32,20 @@ let data = [
         "rate": 7
     }
 ];
-
-
 const card = document.querySelector(".ticketCard-area");
 const search = document.querySelector(".regionSearch");
 const submit = document.querySelector(".addTicket-btn");
 const item = document.querySelector("#searchResult-text");
+const nameInput = document.querySelector('#ticketName');
+const imgUrlInput = document.querySelector('#ticketImgUrl');
+const priceInput = document.querySelector('#ticketPrice');
+const groupInput = document.querySelector('#ticketNum');
+const rateInput = document.querySelector('#ticketRate');
+const descriptionInput = document.querySelector('#ticketDescription');
+const errorMsg = `<i class="fas fa-exclamation-circle"></i><span>必填!</span>`;
 let str = "";
+
+
 
 function init(){
     card.innerHTML = "";
@@ -50,6 +59,8 @@ function init(){
     });
     item.textContent = `本次搜尋共 ${count} 筆資料`;
 }
+
+/*DRY*/
 function concatenation(item){
     return `
     <li class="ticketCard">
@@ -66,7 +77,7 @@ function concatenation(item){
                         <a href="#" class="ticketCard-name">${item.name}</a>
                     </h3>
                     <p class="ticketCard-description">
-                        ${item.description}嚴選超高CP值綠島自由行套裝行程，多種綠島套裝組合。
+                        ${item.description}
                     </p>
                 </div>
                 <div class="ticketCard-info">
@@ -82,28 +93,18 @@ function concatenation(item){
         </li>
     `;
 }
+/*form submit check*/
 function validation(item){
+    console.log(typeof(item.price));
     return !(item.id === "" || item.name === "" || item.imgUrl === "" || item.area === "" || item.description === ""
-        || item.group === "" || item.price === "" || item.rate === "");
+        || item.group === "" || item.price === "" || item.rate <= 0 || item.rate > 10);
 }
 
 
+
 init();
-search.addEventListener('change',()=> {
-    if(search.value === ""){
-        init();
-    }else{
-        card.innerHTML = "";
-        let count = 0;
-        data.filter(item => item.area === search.value)
-            .forEach(function (item, index) {
-                str = concatenation(item);
-                card.innerHTML += str;
-                count ++
-            });
-        item.textContent = `本次搜尋共 ${count} 筆資料`;
-    }
-});
+
+/*Submit action*/
 submit.addEventListener('click',()=>{
     let name = document.querySelector("#ticketName").value;
     let imgUrl = document.querySelector("#ticketImgUrl").value;
@@ -130,8 +131,67 @@ submit.addEventListener('click',()=>{
     }
 });
 
+/*Search action*/
+search.addEventListener('change',()=> {
+    if(search.value === ""){
+        init();
+    }else{
+        card.innerHTML = "";
+        let count = 0;
+        data.filter(item => item.area === search.value)
+            .forEach(function (item, index) {
+                str = concatenation(item);
+                card.innerHTML += str;
+                count ++
+            });
+        item.textContent = `本次搜尋共 ${count} 筆資料`;
+    }
+});
 
 
+/*AJAX no-blank-check*/
+nameInput.addEventListener('keydown',(e)=>{
+    if(nameInput.value === ""){
+        document.querySelector("#ticketName-message").innerHTML = errorMsg;
+    }else{
+        document.querySelector("#ticketName-message").innerHTML ="";
+    }
+});
+imgUrlInput.addEventListener('keypress',()=>{
+    if(imgUrlInput.value === ""){
+        document.querySelector("#ticketImgUrl-message").innerHTML = errorMsg;
+    }else{
+        document.querySelector("#ticketImgUrl-message").innerHTML ="";
+    }
+});
+priceInput.addEventListener('keypress',()=>{
+    if(priceInput.value === ""){
+        document.querySelector("#ticketPrice-message").innerHTML = errorMsg;
+    }else{
+        document.querySelector("#ticketPrice-message").innerHTML ="";
+    }
+});
+groupInput.addEventListener('keypress',()=>{
+    if(groupInput.value === ""){
+        document.querySelector("#ticketNum-message").innerHTML = errorMsg;
+    }else{
+        document.querySelector("#ticketNum-message").innerHTML ="";
+    }
+});
+rateInput.addEventListener('keypress',()=>{
+    if(rateInput.value === ""){
+        document.querySelector("#ticketRate-message").innerHTML = errorMsg;
+    }else{
+        document.querySelector("#ticketRate-message").innerHTML ="";
+    }
+});
+descriptionInput.addEventListener('keypress',()=>{
+    if(descriptionInput.value === ""){
+        document.querySelector("#ticketDescription-message").innerHTML = errorMsg;
+    }else{
+        document.querySelector("#ticketDescription-message").innerHTML ="";
+    }
+});
 
 
 
