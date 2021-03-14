@@ -93,9 +93,9 @@ function concatenation(item){
         </li>
     `;
 }
+
 /*form submit check*/
 function validation(item){
-    console.log(typeof(item.price));
     return !(item.id === "" || item.name === "" || item.imgUrl === "" || item.area === "" || item.description === ""
         || item.group === "" || item.price === "" || item.rate <= 0 || item.rate > 10);
 }
@@ -125,7 +125,13 @@ submit.addEventListener('click',()=>{
     }
     if(validation(newData)){
         data.push(newData);
+        const allInput = document.querySelectorAll('.input');
+        allInput.forEach((item)=>{
+            console.log(item);
+            item.value = "";
+        });
         init();
+        alert("新增成功");
     }else{
         alert("資料錯誤");
     }
