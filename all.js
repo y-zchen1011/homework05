@@ -51,7 +51,6 @@ function init(){
     card.innerHTML = "";
     item.textContent = "";
     let count = 0;
-    console.log("restart")
     data.forEach(function (item, index){
         str = concatenation(item);
         card.innerHTML += str;
@@ -59,6 +58,7 @@ function init(){
     });
     item.textContent = `本次搜尋共 ${count} 筆資料`;
 }
+
 
 /*DRY*/
 function concatenation(item){
@@ -94,6 +94,7 @@ function concatenation(item){
     `;
 }
 
+
 /*form submit check*/
 function validation(item){
     return !(item.id === "" || item.name === "" || item.imgUrl === "" || item.area === "" || item.description === ""
@@ -104,6 +105,7 @@ function validation(item){
 
 init();
 
+
 /*Submit action*/
 submit.addEventListener('click',()=>{
     let name = document.querySelector("#ticketName").value;
@@ -113,8 +115,9 @@ submit.addEventListener('click',()=>{
     let group = document.querySelector("#ticketNum").value;
     let rate = document.querySelector("#ticketRate").value;
     let description = document.querySelector("#ticketDescription").value;
+    let id = data[data.length - 1].id+1;
     let newData = {
-        "id": 2,
+        "id": id,
         "name": name,
         "imgUrl": imgUrl,
         "area": area,
@@ -127,7 +130,6 @@ submit.addEventListener('click',()=>{
         data.push(newData);
         const allInput = document.querySelectorAll('.input');
         allInput.forEach((item)=>{
-            console.log(item);
             item.value = "";
         });
         init();
@@ -136,6 +138,7 @@ submit.addEventListener('click',()=>{
         alert("資料錯誤");
     }
 });
+
 
 /*Search action*/
 search.addEventListener('change',()=> {
