@@ -58,8 +58,6 @@ function init(){
     });
     item.textContent = `本次搜尋共 ${count} 筆資料`;
 }
-
-
 /*DRY*/
 function concatenation(item){
     return `
@@ -93,8 +91,6 @@ function concatenation(item){
         </li>
     `;
 }
-
-
 /*form submit check*/
 function validation(item){
     return !(item.id === "" || item.name === "" || item.imgUrl === "" || item.area === "" || item.description === ""
@@ -104,8 +100,6 @@ function validation(item){
 
 
 init();
-
-
 /*Submit action*/
 submit.addEventListener('click',()=>{
     let name = document.querySelector("#ticketName").value;
@@ -115,9 +109,8 @@ submit.addEventListener('click',()=>{
     let group = document.querySelector("#ticketNum").value;
     let rate = document.querySelector("#ticketRate").value;
     let description = document.querySelector("#ticketDescription").value;
-    let id = data[data.length - 1].id+1;
     let newData = {
-        "id": id,
+        "id": data.length,
         "name": name,
         "imgUrl": imgUrl,
         "area": area,
@@ -138,8 +131,6 @@ submit.addEventListener('click',()=>{
         alert("資料錯誤");
     }
 });
-
-
 /*Search action*/
 search.addEventListener('change',()=> {
     if(search.value === ""){
@@ -159,42 +150,42 @@ search.addEventListener('change',()=> {
 
 
 /*AJAX no-blank-check*/
-nameInput.addEventListener('keydown',(e)=>{
+nameInput.addEventListener('blur',(e)=>{
     if(nameInput.value === ""){
         document.querySelector("#ticketName-message").innerHTML = errorMsg;
     }else{
         document.querySelector("#ticketName-message").innerHTML ="";
     }
 });
-imgUrlInput.addEventListener('keypress',()=>{
+imgUrlInput.addEventListener('blur',(e)=>{
     if(imgUrlInput.value === ""){
         document.querySelector("#ticketImgUrl-message").innerHTML = errorMsg;
     }else{
         document.querySelector("#ticketImgUrl-message").innerHTML ="";
     }
 });
-priceInput.addEventListener('keypress',()=>{
+priceInput.addEventListener('blur',(e)=>{
     if(priceInput.value === ""){
         document.querySelector("#ticketPrice-message").innerHTML = errorMsg;
     }else{
         document.querySelector("#ticketPrice-message").innerHTML ="";
     }
 });
-groupInput.addEventListener('keypress',()=>{
+groupInput.addEventListener('blur',(e)=>{
     if(groupInput.value === ""){
         document.querySelector("#ticketNum-message").innerHTML = errorMsg;
     }else{
         document.querySelector("#ticketNum-message").innerHTML ="";
     }
 });
-rateInput.addEventListener('keypress',()=>{
+rateInput.addEventListener('blur',(e)=>{
     if(rateInput.value === ""){
         document.querySelector("#ticketRate-message").innerHTML = errorMsg;
     }else{
         document.querySelector("#ticketRate-message").innerHTML ="";
     }
 });
-descriptionInput.addEventListener('keypress',()=>{
+descriptionInput.addEventListener('blur',(e)=>{
     if(descriptionInput.value === ""){
         document.querySelector("#ticketDescription-message").innerHTML = errorMsg;
     }else{
